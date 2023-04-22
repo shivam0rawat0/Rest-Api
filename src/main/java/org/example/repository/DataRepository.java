@@ -1,23 +1,39 @@
 package org.example.repository;
 
 import org.example.model.DataPoint;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
+import java.util.Scanner;
 
 @Service
 public class DataRepository implements Repository{
 
-    static List<DataPoint> list = new ArrayList<DataPoint>();
-    public DataRepository() {
-        list.add(new DataPoint("LocA", (float)12, (float)123, (float)430));
-        list.add(new DataPoint("LocB", (float)62, (float)133, (float)240));
-        list.add(new DataPoint("LocC", (float)75, (float)143, (float)340));
-        list.add(new DataPoint("LocD", (float)34, (float)553, (float)574));
+    @Value("${db.loc}")
+    private String dbPath;
+
+    private static DataPoint getObject(String [] row){
+        return new DataPoint(row[1],Float.parseFloat(row[2]),Float.parseFloat(row[3]),Float.parseFloat(row[4]));
     }
     @Override
     public DataPoint getDataPoint(int id) {
-        return list.get(id);
+        DataPoint dataPoint = null;
+        File file = null;
+        Scanner sc = null;
+        try {
+            file = new File(dbPath);
+            sc = new Scanner(file);
+            // to skip row definition
+            sc.nextLine();
+            while (sc.hasNextLine()) {
+                String []row = sc.nextLine().split(",");
+                if(id == Integer.parseInt(row[0])){
+                    dataPoint = getObject(row);
+                    break;
+                }
+            }
+        } catch (Exception ex){}
+        return dataPoint;
     }
 }

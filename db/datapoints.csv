@@ -1,0 +1,12 @@
+id,location,temprature,pressure,humidity
+1,Loc#A,12,56,27
+2,Loc#B,26,546,19
+3,Loc#D,12,56,53
+4,Loc#D,123,66,53
+5,Loc#E,2,46,3
+6,Loc#FF,91,46,233
+7,Loc#FD,9,46,833
+8,Loc#GK,62,946,823
+9,Loc#TY,89,426,31
+
+
