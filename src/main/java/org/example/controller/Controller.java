@@ -22,6 +22,7 @@ public class Controller {
 
     @RequestMapping(value = "/datapoint/{id}",method = RequestMethod.GET)
     public ResponseEntity<Object> getProduct(@PathVariable int id) {
+        System.out.println("Standard Rest Api");
         return new ResponseEntity<>(dataRepository.getDataPoint(id), HttpStatus.OK);
     }
 
